@@ -30,24 +30,27 @@ app.use(cookieParser());
 // CORS and CSP Configuration
 app.use(
   cors({
-    origin: "*", // o '*' para permitir todas las solicitudes
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        'http://localhost:8000'
+      ]
+
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+      }
+
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      return callback( new Error('Not allowed by Cors'))
+
+    }, // o '*' para permitir todas las solicitudes
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type"],
     credentials: true
   })
 );
-// app.use(express.static(_dirname + "/src"));
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       scriptSrc: ["'self'"],
-//       styleSrc: ["'self'"],
-//       imgSrc: ["'self'"],
-//       connectSrc: ["'self'", "http://localhost:3000"],
-//     },
-//   })
-// );
 
 //ENDPOINTS
 
