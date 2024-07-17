@@ -5,10 +5,10 @@ export class UserController {
   static async register(req, res) {
     const { username, email, password } = req.body;
     const registered = await UserModel.register(username, email, password);
-
-    CreateCookie(res, username, email);
-
-    res.json(registered);
+    if(registered) {
+      CreateCookie(res, username, email);
+      return res.status(200).json({ status: "ok", message: "User registered", user: registered });
+    }
   }
 
   static async login(req, res) {
