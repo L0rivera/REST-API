@@ -36,18 +36,18 @@ app.use(
     credentials: true
   })
 );
-app.use(express.static(_dirname + "/src"));
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      imgSrc: ["'self'"],
-      connectSrc: ["'self'", "http://localhost:3000"],
-    },
-  })
-);
+// app.use(express.static(_dirname + "/src"));
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     directives: {
+//       defaultSrc: ["'self'"],
+//       scriptSrc: ["'self'"],
+//       styleSrc: ["'self'"],
+//       imgSrc: ["'self'"],
+//       connectSrc: ["'self'", "http://localhost:3000"],
+//     },
+//   })
+// );
 
 //ENDPOINTS
 
