@@ -69,3 +69,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is listening on PORT: ${PORT}`);
 });
+
+export default app; // Exportar la aplicación Express como el módulo por defecto
