@@ -21,10 +21,6 @@ export const methodsDir = {
 
 //Server
 const app = express();
-const server = createServer(app);
-const io = new Server(server)
-app.set("port", 3000);
-console.log(`Server listening in port`, app.get("port"));
 
 //Configuration to read
 app.use(express.json());
