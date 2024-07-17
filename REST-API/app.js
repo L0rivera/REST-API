@@ -8,6 +8,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
+// Middlewares
+import authenticateToken from "./lib/AuthenticateToken.js";
+
 // Routes
 import { Usersrouter } from "./Routes/user-routes.js";
 import { Projectsrouter } from "./Routes/project-routes.js";
@@ -51,20 +54,30 @@ app.use(
     credentials: true
   })
 );
-
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      imgSrc: ["'self'"],
+      connectSrc: ["'self'", "http://localhost:3000" || PORT],
+    },
+  })
+);
 //ENDPOINTS
 
 // Users
 app.use('/api', Usersrouter);
 
 // Projects
-app.use('/api', Projectsrouter);
+app.use('/api', authenticateToken, Projectsrouter);
 
 // Sections
-app.use('/api', Sectionrouter);
+app.use('/api', authenticateToken, Sectionrouter);
 
 // Tasks
-app.use('/api', Taskrouter);
+app.use('/api', authenticateToken, Taskrouter);
 
 // PORT
 const PORT = process.env.PORT || 3000;
