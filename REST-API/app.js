@@ -1,9 +1,6 @@
 import express from "express";
-import { Server } from 'socket.io';
-import { createServer } from "node:http";
 import bodyParser from "body-parser";
 import cors from "cors";
-import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
@@ -30,7 +27,22 @@ app.use(cookieParser());
 // CORS and CSP Configuration
 app.use(
   cors({
-    origin: "http://localhost:8000", // o '*' para permitir todas las solicitudes
+    origin: (origin, callback) => {
+      const ACCEPTED_ORIGINS = [
+        'http://localhost:8000'
+      ]
+
+      if (ACCEPTED_ORIGINS.includes(origin)) {
+        return callback(null, true);
+      }
+
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      return callback( new Error('Not allowed by cors'));
+
+    }, // o '*' para permitir todas las solicitudes
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
