@@ -25,7 +25,7 @@ export class UserModel {
     }
   }
 
-  static async login(email, password, username) {
+  static async login(email, password) {
     const session = getSession();
 
     try {
@@ -36,7 +36,7 @@ export class UserModel {
       );
       if (result.records.length === 0) {
         // Si no se encuentra el usuario
-        res.status(400).json({ message: "Invalid email or password" });
+        console.error("Invalid email or password");
         console.error(`Error ${error}`);
       }
       //Create a const for the password of the database that is hash
@@ -46,9 +46,9 @@ export class UserModel {
       const isMatch = await bcryptjs.compare(password, storedPassword);
       
       //Compare accepts two parameters one string(password) and one hash(storedPassword) to compare them
-      if (!isMatch) {
+      if (!isMatch) return console.error(error, 'Is not match');
         return result;
-      }
+      
     } catch (err) {
       console.log(`Error: ${err}, messege: ${err.messege}`);
     } finally {

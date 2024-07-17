@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
 // Middlewares
-import authenticateToken from "./lib/AuthenticateToken.js";
+// import authenticateToken from "./lib/AuthenticateToken.js";
 
 // Routes
 import { Usersrouter } from "./Routes/user-routes.js";
@@ -50,7 +50,7 @@ app.use(
 
     }, // o '*' para permitir todas las solicitudes
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
   })
 );
@@ -71,13 +71,13 @@ app.use(
 app.use('/api', Usersrouter);
 
 // Projects
-app.use('/api', authenticateToken, Projectsrouter);
+app.use('/api', Projectsrouter);
 
 // Sections
-app.use('/api', authenticateToken, Sectionrouter);
+app.use('/api', Sectionrouter);
 
 // Tasks
-app.use('/api', authenticateToken, Taskrouter);
+app.use('/api', Taskrouter);
 
 // PORT
 const PORT = process.env.PORT || 3000;
