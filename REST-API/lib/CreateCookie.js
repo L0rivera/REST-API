@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-function CreateCookie(res, username, email) {
+function CreateCookie(req, res, username, email) {
   const token = jsonwebtoken.sign(
     { username: username, email: email },
     process.env.JWT_SECRET,

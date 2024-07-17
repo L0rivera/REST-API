@@ -30,7 +30,7 @@ app.use(cookieParser());
 // CORS and CSP Configuration
 app.use(
   cors({
-    origin: "http://localhost:8000", // o '*' para permitir todas las solicitudes
+    origin: "*", // o '*' para permitir todas las solicitudes
     methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
