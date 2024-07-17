@@ -28,14 +28,7 @@ app.use(bodyParser.json()); // Para parsear JSON
 app.use(bodyParser.urlencoded({ extended: true })); // Para parsear datos de formulario
 app.use(cookieParser());
 // CORS and CSP Configuration
-app.use(
-  cors({
-    origin: "http://localhost:8000", // o '*' para permitir todas las solicitudes
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-  })
-);
+app.use(cors());
 // app.use(express.static(_dirname + "/src"));
 // app.use(
 //   helmet.contentSecurityPolicy({
