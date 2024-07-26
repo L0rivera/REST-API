@@ -30,30 +30,17 @@ app.use(express.json());
 app.use(bodyParser.json()); // Para parsear JSON
 app.use(bodyParser.urlencoded({ extended: true })); // Para parsear datos de formulario
 app.use(cookieParser());
-// CORS and CSP Configuration
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const ACCEPTED_ORIGINS = [
-        'http://localhost:8000'
-      ]
 
-      if (ACCEPTED_ORIGINS.includes(origin)) {
-        return callback(null, true);
-      }
+// Configuración de CORS para permitir solicitudes desde un dominio específico con credenciales
+const corsOptions = {
+    origin: 'http://localhost:8000', // Cambia esto por el dominio de tu frontend
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
 
-      if (!origin) {
-        return callback(null, true);
-      }
+app.use(cors(corsOptions));
 
-      return callback( new Error('Not allowed by Cors'))
-
-    }, // o '*' para permitir todas las solicitudes
-    methods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-  })
-);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
