@@ -41,17 +41,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      imgSrc: ["'self'"],
-      connectSrc: ["'self'", "http://localhost:3000" || PORT],
-    },
-  })
-);
+
 //ENDPOINTS
 
 // Users
