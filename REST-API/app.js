@@ -22,15 +22,6 @@ export const methodsDir = {
   _dirname,
 };
 
-//Server
-const app = express();
-
-//Configuration to read
-app.use(express.json());
-app.use(bodyParser.json()); // Para parsear JSON
-app.use(bodyParser.urlencoded({ extended: true })); // Para parsear datos de formulario
-app.use(cookieParser());
-
 // Configuración de CORS para permitir solicitudes desde un dominio específico con credenciales
 const corsOptions = {
     origin: 'http://localhost:8000', // Cambia esto por el dominio de tu frontend
@@ -39,8 +30,15 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-app.use(cors(corsOptions));
+//Server
+const app = express();
 
+//Configuration to read
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(bodyParser.json()); // Para parsear JSON
+app.use(bodyParser.urlencoded({ extended: true })); // Para parsear datos de formulario
+app.use(cookieParser());
 
 //ENDPOINTS
 

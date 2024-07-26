@@ -8,20 +8,34 @@ export class UserController {
 
     if(registered) {
     CreateCookie(res, username, email);
-    res.send({ status: "ok", message: "User registered in", redirect: "/" });
+    let { token } = CreateCookie();
+    res.send({ registered, token});
    }
   }
 
   static async login(req, res) {
     const { username, email, password } = req.body;
-    const logged = await UserModel.login(email, password);
+    try {
+      const logged = await UserModel.login(email, password);
+      const token = jsonwebtoken.sign(
+        { username, email },
+        process.env.JWT_SECRET,
+        { expiresIn: new Date(
+          Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+        ) }
+      );
+      res.cookie('jwt', token, {
+        path: '/',
+        httpOnly: true, // Agrega esta opción para mayor seguridad
+        secure: process.env.NODE_ENV === 'production' // Configura secure solo en producción
+      })
+      .send({ logged, token})
+    } catch(err) {
 
-    if(logged) {
-    CreateCookie(res, username, email);
-    res.send({ status: "ok", message: "User logged in", redirect: "/" });
+    }
    }
-    
-  }
+  
+  
 
   // static async GetAll (req, res) {
   //     const
