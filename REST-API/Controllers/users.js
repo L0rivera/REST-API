@@ -1,3 +1,4 @@
+import jsonwebtoken from 'jsonwebtoken'
 import { UserModel } from "../Models/user.js";
 import CreateCookie from "../lib/CreateCookie.js";
 
@@ -20,18 +21,19 @@ export class UserController {
       const token = jsonwebtoken.sign(
         { username, email },
         process.env.JWT_SECRET,
-        { expiresIn: new Date(
-          Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-        ) }
+        { expiresIn: '1h' }
       );
       res.cookie('jwt', token, {
         path: '/',
         httpOnly: true, // Agrega esta opción para mayor seguridad
-        secure: process.env.NODE_ENV === 'production' // Configura secure solo en producción
+        secure: process.env.NODE_ENV === 'production', // Configura secure solo en producción
+        maxAge: 1000 * 60 * 60
+    
       })
-      .send({ logged, token})
+      if(logged) return res.status(200).json({ message: "Login successful", token})
     } catch(err) {
-
+       console.error(`Error: ${err}, message: ${err.message}`);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
    }
   

@@ -46,7 +46,10 @@ export class UserModel {
       const isMatch = await bcryptjs.compare(password, storedPassword);
       
       //Compare accepts two parameters one string(password) and one hash(storedPassword) to compare them
-      if (!isMatch) return console.error(error, 'Is not match');
+        if (!isMatch) {
+            throw new Error("Invalid email or password");
+        }
+      
         return result;
       
     } catch (err) {
