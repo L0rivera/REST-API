@@ -24,7 +24,7 @@ export const methodsDir = {
 
 // Configuración de CORS para permitir solicitudes desde un dominio específico con credenciales
 const corsOptions = {
-    origin: 'http://localhost:8000', // Cambia esto por el dominio de tu frontend
+    origin: 'http://localhost:8000',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
